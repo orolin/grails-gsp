@@ -84,6 +84,9 @@ subprojects {
                 details.useVersion(springBootVersion)
             } else if (details.requested.group == "org.spockframework") {
                 details.useVersion(spockVersion)
+            } else if (details.requested.group == "org.codehaus.groovy") {
+                details.useTarget(group: "org.apache.groovy", name: details.requested.name, version: details.requested.version)
+                details.because "The dependency coordinates are changed in Apache Groovy 4"
             }
         }
     }
