@@ -92,6 +92,7 @@ subprojects {
     }
 
     dependencies {
+        api platform("org.apache.groovy:groovy-bom:$groovyVersion")
         compileOnly "javax.servlet:javax.servlet-api:$servletApiVersion"
 
         testImplementation "javax.servlet:javax.servlet-api:$servletApiVersion"
@@ -101,7 +102,12 @@ subprojects {
         testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.9.0"
     }
 
+    tasks.named("compileTestGroovy") {
+        options.forkOptions.jvmArgs += ["-Dspock.iKnowWhatImDoing.disableGroovyVersionCheck=true"]
+    }
+
     tasks.withType(Test) {
+        systemProperty 'spock.iKnowWhatImDoing.disableGroovyVersionCheck', 'true'
         useJUnitPlatform()
         testLogging {
             showStandardStreams = true
